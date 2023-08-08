@@ -1,0 +1,14 @@
+/build
+/.gradle
+/.idea
+/target
+/dockervideos
+/out
+.classpath
+.project
+/.settings
+/bin
+/history
+*.iml
+*.ipr
+*.iws

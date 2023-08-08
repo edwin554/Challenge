@@ -1,0 +1,55 @@
+defaultTasks 'clean', 'test', 'aggregate'
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.serenity-bdd:serenity-gradle-plugin:3.3.0"
+        classpath 'net.serenity-bdd:serenity-single-page-report:3.5.1'
+    }
+}
+
+
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: "net.serenity-bdd.serenity-gradle-plugin"
+
+
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+
+ dependencies {
+    implementation group: 'net.serenity-bdd', name: 'serenity-core', version: '3.3.4'
+    testImplementation group: 'net.serenity-bdd', name: 'serenity-cucumber', version: '3.3.4'
+    implementation group: 'net.serenity-bdd', name: 'serenity-screenplay-webdriver', version: '3.3.4'
+    implementation group: 'net.serenity-bdd', name: 'serenity-screenplay', version: '3.3.4'
+    implementation group: 'net.serenity-bdd', name: 'serenity-ensure', version: '3.3.4'
+    implementation group: 'net.serenity-bdd', name: 'serenity-junit', version: '3.3.4'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.0'
+    implementation 'org.apache.pdfbox:pdfbox:2.0.27'
+     testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.6'
+     implementation 'com.github.javafaker:javafaker:1.0.2'
+
+ }
+
+test {
+    systemProperties System.getProperties()
+    testLogging.showStandardStreams = true
+    systemProperty "file.encoding","UTF-8"
+    finalizedBy(aggregate)
+}
+
+serenity {
+    reports = ["single-page-html"]
+}
